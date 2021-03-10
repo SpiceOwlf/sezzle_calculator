@@ -1,105 +1,58 @@
-import React,{Component} from 'react';
+import React,{Component,useState, useEffect, useRef} from 'react';
+import socketIOClient from "socket.io-client";
 import './App_cal.css';
-import ResultComponent from './components/ResultComponent';
-import KeyPadComponent from "./components/KeyPadComponent";
-import HistoryComponent from './components/HistoryComponent';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./index.css";
+import App_cal from "./App_cal";
+const ENDPOINT = "http://127.0.0.1:4001";
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
-window.histArr = [];
-//needs client and server
+function App() {
+    // const [response, setResponse] = useState("");
+    // useEffect(() => {
+    //     const socket = socketIOClient(ENDPOINT);
 
-class App extends Component {
-    
-    constructor(){
-        super();
+    // // socket.emit("ferret", "tobi", (data) => {
+    // //     console.log(data); // data will be "woot"
+    // // });
+    //     socket.emit("ferret", window.histArr, (data) => {
+    //         console.log(data); // data will be "woot"
+    //     });
 
-        this.state = {
-            result: "",
-            history: "",
-            //insert past history to the historyArr?
-            historyArr: Array(10).fill(null),
-            
-        }
-    }
-    //define onClick function that used in keypadComponent.js
+    //     socket.on("FromAPI", data => {
+    //         setResponse(data);
+    //         // console.log("data is" ,data); time
+    //       });
 
-    onClick=button=>{
-        if(button === "="){
-            // console.log("calculate");
-            this.setState({
-                history: this.state.result+'='+ eval(this.state.result),
-            })
-            window.histArr.unshift(this.state.history);
-            console.log(window.histArr);
-            if(window.histArr.length >=9){
-                console.log("excess length");
-                window.histArr.pop();
-
-            }
+       
+    //     // console.log("jkjkjkjkjkjk123123");
+    //     // console.log(window.histArr);
+    //   }, []);
 
 
-            this.calculate()
-        }else if(button === "C"){
-            console.log("reset");
-            this.reset();
-        }else if(button === "CE"){
-            // console.log("backspace");
-            this.backspace();
-        }else{
-            // console.log("before else: " + this.state.result);
-            this.setState({
-                result: this.state.result + button,
-            })
-        }
-    };
-
-    calculate = ()=>{
-        try{
-            this.setState({
-                result:(eval(this.state.result) || "") + "",
-            })
-        }catch(e){
-            this.setState({
-                result:"error"
-            })
-        }
-
-    };
+  return (
+      
+    <div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={App_cal} />
+        {/* <Route exact path="/:roomId" component={ChatRoom} /> */}
+      </Switch>
+    </Router>
+    {/* <p>
+      It's <time dateTime={response}>{response}</time>
+    </p> */}
+    {/* <p>
+        another 
+        
+    </p> */}
 
     
-    reset=()=>{
-        this.setState({
-            result:""
-        })
-    };
-    backspace=()=>{
-        this.setState({
-            result: this.state.result.slice(0,-1)
-        })
+        
+        
 
-    }
-
-
-    render(){
-        return(
-            <div>
-                <div className = "calculator-body">
-                    <h5>
-                        A Calculator
-                    </h5>
-                    <ResultComponent result={this.state.result}/>
-                    <KeyPadComponent onClick={this.onClick}/>
-                    <HistoryComponent history={this.state.history}/>
-                    <HistoryComponent history={window.histArr+ "\n"}/>
-                </div>
-                <div>
-                    <h5>
-                        Shared history Area
-                    </h5>
-                    
-                </div>
-            </div>
-        );
-    }
+    </div>
+  );
 }
 
 export default App;
