@@ -1,52 +1,109 @@
-import React from "react";
+
 
 import "./ChatRoom.css";
 import useChat from "../useChat";
 import App_cal from "../App_cal";
 
-const ChatRoom = (props) => {
-  const { roomId } = props.match.params;
-  const { messages, sendMessage } = useChat(roomId);
-  const [newMessage, setNewMessage] = React.useState("");
 
-  const handleNewMessageChange = (event) => {
-    setNewMessage(event.target.value);
-  };
+import React,{Component} from 'react';
+// import './App_cal.css';
+import ResultComponent from '../components/ResultComponent';
+import KeyPadComponent from "../components/KeyPadComponent";
+import HistoryComponent from '../components/HistoryComponent';
 
-  const handleSendMessage = () => {
-    sendMessage(newMessage);
-    setNewMessage("");
-  };
+window.histArr = [];
+class ChatRoom extends Component {
+    
+    constructor(){
+        super();
 
-  return (
-    <div className="chat-room-container">
-      <h5 className="room-name">Room: {roomId}</h5>
-      <div className="messages-container">
-        <ol className="messages-list">
-          {messages.map((message, i) => (
-            <li
-              key={i}
-              className={`message-item ${
-                message.ownedByCurrentUser ? "my-message" : "received-message"
-              }`}
-            >
-              {message.body}
-            </li>
-          ))}
-        </ol>
-      </div>
-      <textarea
-        value={newMessage}
-        onChange={handleNewMessageChange}
-        placeholder="Write message..."
-        className="new-message-input-field"
-      />
-      <button onClick={handleSendMessage} className="send-message-button">
-        Send
-      </button>
-      {/* <App_cal/> */}
-    </div>
-  );
-};
+        this.state = {
+            result: "",
+            history: "",
+            //insert past history to the historyArr?
+            historyArr: Array(10).fill(null),
+            
+        }
+    }
+    //define onClick function that used in keypadComponent.js
 
+    onClick=button=>{
+        if(button === "="){
+            // console.log("calculate");
+            this.setState({
+                history: this.state.result+'='+ eval(this.state.result),
+            })
+            window.histArr.unshift(this.state.history);
+            console.log(window.histArr);
+            if(window.histArr.length >=9){
+                console.log("excess length");
+                window.histArr.pop();
+
+            }
+
+
+            this.calculate()
+        }else if(button === "C"){
+            console.log("reset");
+            this.reset();
+        }else if(button === "CE"){
+            // console.log("backspace");
+            this.backspace();
+        }else{
+            // console.log("before else: " + this.state.result);
+            this.setState({
+                result: this.state.result + button,
+            })
+        }
+    };
+
+    calculate = ()=>{
+        try{
+            this.setState({
+                result:(eval(this.state.result) || "") + "",
+            })
+        }catch(e){
+            this.setState({
+                result:"error"
+            })
+        }
+
+    };
+
+    
+    reset=()=>{
+        this.setState({
+            result:""
+        })
+    };
+    backspace=()=>{
+        this.setState({
+            result: this.state.result.slice(0,-1)
+        })
+
+    }
+
+
+    render(){
+        return(
+            <div>
+                <div className = "calculator-body">
+                    <h5>
+                        A Calculator
+                    </h5>
+                    <ResultComponent result={this.state.result}/>
+                    <KeyPadComponent onClick={this.onClick}/>
+                    <HistoryComponent history={this.state.history}/>
+                    <HistoryComponent history={window.histArr+ "\n"}/>
+                </div>
+                <div>
+                    <h5>
+                        Shared history Area
+                    </h5>
+                    
+                </div>
+            </div>
+        );
+    }
+}
 export default ChatRoom;
