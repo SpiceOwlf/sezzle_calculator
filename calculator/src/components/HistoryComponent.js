@@ -5,10 +5,12 @@ class HistoryComponent extends Component {
 
     render() {
         let {history} = this.props;
+        let {historyArr} = this.props;
         return (
             <div className="result">
-                <p>history will appear here</p>
                 <p>{history}</p>
+                {/* <p>{historyArr}</p> */}
+                
             </div>
     )
         ;

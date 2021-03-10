@@ -1,5 +1,5 @@
 {
-  "name": "calculator",
+  "name": "socket.io-react-hooks-chat",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,7 +10,6 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "socket.io": "^3.1.2",
     "socket.io-client": "^3.1.2",
     "web-vitals": "^1.0.1"
   },
