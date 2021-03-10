@@ -5,6 +5,8 @@ import KeyPadComponent from "./components/KeyPadComponent";
 import HistoryComponent from './components/HistoryComponent';
 
 window.histArr = [];
+//needs client and server
+
 class App extends Component {
     
     constructor(){
