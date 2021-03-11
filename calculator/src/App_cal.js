@@ -50,9 +50,6 @@ class App_cal extends Component {
         });
         console.log("calculate");
 
-
-
-
         }else if(button === "C"){
             console.log("reset");
             this.reset();
