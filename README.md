@@ -8,7 +8,9 @@
 
 -React components
 
--socket.io components, such as <socket.io-client> and <react-router-dom>
+-socket.io components, such as <socket.io-client>, <react-router-dom>
+  
+  
   
 
 1. start the server: move to folder <socekt-io-server2> and run <npm install> to install all necessary configurations, then <node app.js> to start the server
