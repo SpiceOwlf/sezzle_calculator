@@ -1,9 +1,15 @@
 # sezzle_oa
+
 #how to run
+
 #Configuratoin Requriements:
+
 -Node version >10.14, >12 or >14
+
 -React components, such as 
+
 -socket.io components, such as <socket.io-client> and <react-router-dom>
+  
 
 1. start the server: move to folder <socekt-io-server2> and run <npm install> to install all necessary configurations, then <node app.js> to start the server
 2. move to  folder <calculator>, run <npm install> to install all necessary configurations, and run <Npm start> to start the calculator
