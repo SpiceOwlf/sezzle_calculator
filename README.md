@@ -6,7 +6,7 @@
 
 -Node version >10.14, >12 or >14
 
--React components, such as 
+-React components
 
 -socket.io components, such as <socket.io-client> and <react-router-dom>
   
