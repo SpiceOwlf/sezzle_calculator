@@ -16,10 +16,8 @@ class App_cal extends Component {
         this.state = {
             result: "",
             history: "",
-            // shared_hist: [],
         }
     }
-    //define onClick function that used in keypadComponent.js
 
     onClick=button=>{
         if(button === "="){
@@ -43,9 +41,7 @@ class App_cal extends Component {
             const socket = socketIOClient(ENDPOINT);
             socket.emit("send_history", (this.state.result+'='+ eval(this.state.result)), (data) => {
             console.log("receive data is ", data); 
-            // this.setState({
-            //     shared_hist : data,
-            // })
+  
             window.shared_hist = data;
         });
         console.log("calculate");
@@ -54,10 +50,8 @@ class App_cal extends Component {
             console.log("reset");
             this.reset();
         }else if(button === "CE"){
-            // console.log("backspace");
             this.backspace();
         }else{
-            // console.log("before else: " + this.state.result);
             this.setState({
                 result: this.state.result + button,
             })
